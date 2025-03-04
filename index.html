@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mystic Insights | Modern Tarot Reading Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2e0259;
+      --secondary: #7b1fa2;
+      --accent: #ff9800;
+      --light: #f5f0ff;
+      --dark: #1a0033;
+      --text: #333;
+      --success: #4caf50;
+      --error: #f44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #120024, #2e0259);
+      color: var(--light);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      color: var(--light);
+      font-weight: 600;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 25px;
+    }
+
+    nav ul li a {
+      color: var(--light);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--accent);
+    }
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .btn-login {
+      background: transparent;
+      color: var(--light);
+      border: 1px solid var(--light);
+      margin-right: 10px;
+    }
+
+    .btn-login:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-signup {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    .btn-signup:hover {
+      background: #ffab2e;
+      transform: translateY(-2px);
+    }
+
+    /* Main Content Styles */
+    main {
+      padding-top: 100px;
+      min-height: calc(100vh - 70px);
+    }
+
+    .section {
+      padding: 60px 0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 0;
+      background: radial-gradient(circle at center, rgba(123, 31, 162, 0.2), transparent 70%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Floating symbols background */
+    .floating-symbols {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .symbol {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0.1;
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0.1;
+      }
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--light);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: var(--light);
+      opacity: 0.9;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(123, 31, 162, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(123, 31, 162, 0.6);
+    }
+
+    /* Tarot Reading Section */
+    .reading-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      padding: 40px;
+      margin-top: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .spread-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .spread-option {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .spread-option:hover, .spread-option.active {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    .card-spread {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      perspective: 1000px;
+    }
+
+    .card {
+      width: 120px;
+      height: 210px;
+      background: url('https://api.placeholder.com/120/210') center center/cover;
+      border-radius: 10px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+      cursor: pointer;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #291639, #120024);
+      border: 2px solid #3c1b5b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 2rem;
+    }
+
+    .card-front {
+      background: white;
+      color: var(--text);
+      transform: rotateY(180deg);
+      overflow: hidden;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .reading-actions {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .reading-results {
+      margin-top: 50px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 800px;
+      width: 100%;
+      display: none;
+    }
+
+    .reading-results.active {
+      display: block;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-meaning {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-meaning h4 {
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--accent);
+    }
+
+    .card-meaning h4 .position {
+      font-size: 0.9rem;
+      margin-left: 10px;
+      color: var(--light);
+      opacity: 0.7;
+    }
+
+    .card-meaning p {
+      line-height: 1.7;
+    }
+
+    /* Features Section */
+    .features {
+      text-align: center;
+    }
+
+    .features h2 {
+      font-size: 2.5rem;
+      margin-bottom: 60px;
+    }
+
+    .features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 350px;
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .feature-card p {
+      opacity: 0.8;
+    }
+
+    /* Pricing Section */
+    .pricing {
+      text-align: center;
+    }
+
+    .pricing h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .pricing p {
+      max-width: 600px;
+      margin: 0 auto 60px;
+      opacity: 0.8;
+    }
+
+    .pricing-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .pricing-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 350px;
+      transition: transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.featured {
+      background: linear-gradient(135deg, rgba(123, 31, 162, 0.3), rgba(46, 2, 89, 0.3));
+      border: 1px solid var(--secondary);
+    }
+
+    .pricing-card.featured::before {
+      content: "MOST POPULAR";
+      position: absolute;
+      top: 12px;
+      right: -30px;
+      background: var(--accent);
+      color: var(--dark);
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 5px 30px;
+      transform: rotate(45deg);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .pricing-header {
+      margin-bottom: 30px;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--light);
+    }
+
+    .price span {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    .pricing-features {
+      text-align: left;
+      margin-bottom: 30px;
+    }
+
+    .pricing-features li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .pricing-features li i {
+      color: var(--success);
+      margin-right: 10px;
+    }
+
+    /* Login/Signup Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #291639, #120024);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 500px;
+      padding: 40px;
+      position: relative;
+      transform: translateY(50px);
+      transition: all 0.4s;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: var(--light);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close-modal:hover {
+      color: var(--accent);
+    }
+
+    .modal-tabs {
+      display: flex;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-right: 10px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .modal-tab.active {
+      border-bottom: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: var(--light);
+      font-size: 1rem;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .btn-block {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .form-footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .toast {
+      padding: 15px 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      transition: all 0.3s;
+      transform: translateX(120%);
+    }
+
+    .toast.active {
+      transform: translateX(0);
+    }
+
+    .toast i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+
+    .toast.success i {
+      color: var(--success);
+    }
+
+    .toast.error i {
+      color: var(--error);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 60px 0 30px;
+      margin-top: 60px;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .footer-col {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-col h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      color: var(--light);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: all 0.3s;
+    }
+
+    .footer-col ul li a:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light);
+      transition: all 0.3s;
+    }
+
+    .social-link:hover {
+      background: var(--accent);
+      color: var(--dark);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+      .pricing-grid, .features-grid {
+        gap: 20px;
+      }
+      .card {
+        width: 100px;
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      nav {
+        margin: 20px 0;
+      }
+      .hero h2 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .feature-card, .pricing-card {
+        max-width: 100%;
+      }
+      .card-spread {
+        gap: 10px;
+      }
+      .card {
+        width: 80px;
+        height: 140px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav ul li {
+        margin-left: 0;
+      }
+      .auth-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+      }
+      .btn-login, .btn-signup {
+        width: 100%;
+        margin-right: 0;
+      }
+      .spread-options {
+        flex-direction: column;
+      }
+      .reading-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Toast Container -->
+  <div class="toast-container"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <i class="fas fa-moon" style="color: var(--accent); font-size: 1.8rem; margin-right: 10px;"></i>
+        <h1>Mystic<span>Insights</span></h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#" id="nav-home">Home</a></li>
+          <li><a href="#features" id="nav-features">Features</a></li>
+          <li><a href="#pricing" id="nav-pricing">Pricing</a></li>
+          <li><a href="#" id="nav-about">About</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn btn-login" id="login-btn">Login</button>
+        <button class="btn btn-signup" id="signup-btn">Sign Up</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="section hero">
+      <div class="floating-symbols" id="floating-symbols"></div>
+      <div class="container">
+        <h2>Discover Your Path with Digital Tarot</h2>
+        <p>Unlock insights into your past, present, and future with our beautiful digital tarot experience.</p>
+        <button class="btn btn-primary" id="start-reading-btn">Start Your Reading</button>
+        
+        <!-- Tarot Reading Interface -->
+        <div class="reading-section" id="reading-interface">
+          <h3>Choose Your Reading Type</h3>
+          <div class="spread-options">
+            <div class="spread-option active" data-spread="three-card">Three Card Spread</div>
+            <div class="spread-option" data-spread="celtic-cross">Celtic Cross</div>
+            <div class="spread-option" data-spread="single-card">Single Card</div>
+          </div>
+          
+          <div class="card-spread" id="card-spread">
+            <!-- Cards will be dynamically added here -->
+          </div>
+          
+          <div class="reading-actions">
+            <button class="btn btn-primary" id="shuffle-btn">Shuffle Cards</button>
+            <button class="btn btn-primary" id="reveal-btn">Reveal All</button>
+            <button class="btn btn-signup" id="save-reading-btn">Save Reading</button>
+          </div>
+          
+          <div class="reading-results" id="reading-results">
+            <!-- Reading results will be displayed here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+      <div class="container">
+        <h2>Discover Our Mystic Features</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <h3>Personalized Readings</h3>
+            <p>Our AI-enhanced interpretations provide personalized guidance based on your unique energy and questions.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-history"></i>
+            </div>
+            <h3>Reading History</h3>
+            <p>Save and revisit your past readings to track your spiritual journey and see how predictions manifest.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Community Insights</h3>
+            <p>Share your readings with our community and gain different perspectives on your cards.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <h3>Learn Tarot</h3>
+            <p>Detailed card explanations and meaning guides to help you understand the art of tarot reading.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-journal-whills"></i>
+            </div>
+            <h3>Spiritual Journal</h3>
+            <p>Integrate your readings with a personal journal to record thoughts, feelings, and insights.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3>Professional Readers</h3>
+            <p>Connect with experienced tarot readers for premium, live reading sessions and personalized guidance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+      <div class="container">
+        <h2>Choose Your Mystical Path</h2>
+        <p>Select the subscription that best fits your spiritual journey and tarot reading needs.</p>
+        
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-header">
+              <h3>Free Seeker</h3>
+              <div class="price">$0<span>/month</span></div>
+              <p>Begin your journey with basic readings</p>
+            </div>
+            
+            <ul class="pricing-features">
+              <li><i class="fas fa-check"></i> Three-card daily readings</li>
+              <li><i class="fas fa-check"></i> Basic card interpretations</li>
+              <li><i class="fas fa-check"></i> Limited reading history (3 readings)</li>
+              <li><i class="fas fa-times"></i> No AI-enhanced interpretations</li>
+              <li><i class="fas fa-times"></i> No community features</li>
+            </ul>
+            
+            <button class="btn btn-primary btn-block">Get Started</button>
+          </div>
+          
+          <div class="pricing-card featured">
+            <div class="pricing-header">
+              <h3>Mystic Adept</h3>
+              <div class="price">$9.99<span>/month</span></div>
+              <p>Deepen your practice with advanced features</p>
+            </div>
+            
+            <ul class="pricing-features">
+              <li><i class="fas fa-check"></i> All reading spreads unlocked</li>
+              <li><i class="fas fa-check"></i> Advanced card interpretations</li>
+              <li><i class="fas fa-check"></i> Unlimited reading history</li>
+              <li><i class="fas fa-check"></i> AI-enhanced personalized insights</li>
+              <li><i class="fas fa-check"></i> Community access</li>
+              <li><i class="fas fa-check"></i> Spiritual journal</li>
+            </ul>
+            
+            <button class="btn btn-signup btn-block">Subscribe Now</button>
+          </div>
+          
+          <div class="pricing-card">
+            <div class="pricing-header">
+              <h3>Divine Oracle</h3>
+              <div class="price">$19.99<span>/month</span></div>
+              <p>The ultimate tarot experience</p>
+            </div>
+            
+            <ul class="pricing-features">
+              <li><i class="fas fa-check"></i> Everything in Mystic Adept</li>
+              <li><i class="fas fa-check"></i> Monthly live session with professional reader</li>
+              <li><i class="fas fa-check"></i> Priority support</li>
+              <li><i class="fas fa-check"></i> Custom spreads creation</li>
+              <li><i class="fas fa-check"></i> Early access to new features</li>
+            </ul>
+            
+            <button class="btn btn-primary btn-block">Go Premium</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo">
+            <i class="fas fa-moon" style="color: var(--accent); font-size: 1.5rem; margin-right: 10px;"></i>
+            <h1>Mystic<span>Insights</span></h1>
+          </div>
+          <p style="margin-top: 20px;">Guiding your spiritual journey through the ancient wisdom of tarot.</p>
+          <div class="social-links" style="margin-top: 20px;">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Tarot Guide</a></li>
+            <li><a href="#">Card Meanings</a></li>
+            <li><a href="#">Spread Types</a></li>
+            <li><a href="#">Learning Center</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 MysticInsights. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Login/Signup Modal -->
+  <div class="modal" id="auth-modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      
+      <div class="modal-tabs">
+        <div class="modal-tab active" data-tab="login">Login</div>
+        <div class="modal-tab" data-tab="signup">Sign Up</div>
+      </div>
+      
+      <div class="modal-body" id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" class="form-control" placeholder="Enter your email">
+        </div>
+        
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
+        </div>
+        
+        <div class="form-group" style="display: flex; align-items: center;">
+          <input type="checkbox" id="remember-me" style="margin-right: 10px;">
+          <label for="remember-me" style="margin-bottom: 0;">Remember me</label>
+        </div>
+        
+        <button class="btn btn-signup btn-block">Login</button>
+        
+        <div class="form-footer">
+          <p>Forgot your password? <a href="#">Reset it here</a></p>
+        </div>
+      </div>
+      
+      <div class="modal-body" id="signup-form" style="display: none;">
+        <div class="form-group">
+          <label for="signup-name">Full Name</label>
+          <input type="text" id="signup-name" class="form-control" placeholder="Enter your name">
+        </div>
+        
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" class="form-control" placeholder="Enter your email">
+        </div>
+        
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" class="form-control" placeholder="Create a password">
+        </div>
+        
+        <div class="form-group">
+          <label for="signup-confirm">Confirm Password</label>
+          <input type="password" id="signup-confirm" class="form-control" placeholder="Confirm your password">
+        </div>
+        
+        <div class="form-group" style="display: flex; align-items: center;">
+          <input type="checkbox" id="terms" style="margin-right: 10px;">
+          <label for="terms" style="margin-bottom: 0;">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+        
+        <button class="btn btn-signup btn-block">Create Account</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tarot Card Database
+    const tarotCards = [
+      {
+        id: 0,
+        name: "The Fool",
+        image: "https://api.placeholder.com/120/210",
+        meaning: {
+          upright: "New beginnings, innocence, spontaneity, free spirit",
+          reversed: "Recklessness, risk-taking, inconsideration"
+        },
+        description: "The Fool represents new beginnings, having faith in the future, being inexperienced, not knowing what to expect, having beginner's luck, improvisation and believing in the universe."
+      },
+      {
+        id: 1,
+        name: "The Magician",
+        image: "https://api.placeholder.com/120/210",
+        meaning: {
+          upright: "Manifestation, resourcefulness, power, inspired action",
+          reversed: "Manipulation, poor planning, untapped talents"
+        },
+        description: "The Magician represents manifestation, resourcefulness, power, inspired action, creation and personal power."
+      },
+      {
+        id: 2,
+        name: "The High Priestess",
+        image: "https://api.placeholder.com/120/210",
+        meaning: {
+          upright: "Intuition, mystery, spirituality, higher power, inner voice",
+          reversed: "Secrets, disconnection from intuition, withdrawal"
+        },
+        description: "The High Priestess represents secrets, mystery, intuition, wisdom, knowledge and understanding."
+      },
+      // Additional cards would be added here (22 Major Arcana + 56 Minor Arcana)
+    ];
+
+    // Spread Positions and Meanings
+    const spreads = {
+      "single-card": [
+        { name: "Insight", description: "A single card to provide insight into your current situation or question." }
+      ],
+      "three-card": [
+        { name: "Past", description: "Influences from the past that are affecting your situation." },
+        { name: "Present", description: "Current energies and factors at play." },
+        { name: "Future", description: "Potential outcomes and energies moving forward." }
+      ],
+      "celtic-cross": [
+        { name: "Present", description: "Represents your current situation and the energy surrounding it." },
+        { name: "Challenge", description: "A challenge or obstacle that's crossing your path." },
+        { name: "Foundation", description: "What is beneath the situation; the foundation or underlying cause." },
+        { name: "Recent Past", description: "Influences from the recent past that are still affecting the situation." },
+        { name: "Potential", description: "Possible outcome if you continue on your current path." },
+        { name: "Near Future", description: "What is coming in the near future." },
+        { name: "Self", description: "How you see yourself in relation to the situation." },
+        { name: "Environment", description: "External influences and how others see you." },
+        { name: "Hopes/Fears", description: "Your hopes and fears regarding the situation." },
+        { name: "Outcome", description: "The likely outcome if all energies remain as they are." }
+      ]
+    };
+
+    // DOM Elements
+    const floatingSymbols = document.getElementById('floating-symbols');
+    const startReadingBtn = document.getElementById('start-reading-btn');
+    const readingInterface = document.getElementById('reading-interface');
+    const spreadOptions = document.querySelectorAll('.spread-option');
+    const cardSpread = document.getElementById('card-spread');
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const revealBtn = document.getElementById('reveal-btn');
+    const saveReadingBtn = document.getElementById('save-reading-btn');
+    const readingResults = document.getElementById('reading-results');
+    const authModal = document.getElementById('auth-modal');
+    const closeModal = document.getElementById('close-modal');
+    const modalTabs = document.querySelectorAll('.modal-tab');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
+    const toastContainer = document.querySelector('.toast-container');
+
+    // Current state
+    let currentSpread = "three-card";
+    let currentCards = [];
+    let isLoggedIn = false;
+
+    // Create floating mystical symbols
+    function createFloatingSymbols() {
+      const symbols = ['✧', '✦', '★', '☆', '✴', '✹', '✸', '✷', '○', '◎', '●', '◯', '◉', '◍'];
+      const numSymbols = 30;
+      
+      for (let i = 0; i < numSymbols; i++) {
+        const symbol = document.createElement('div');
+        symbol.className = 'symbol';
+        symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        symbol.style.left = `${Math.random() * 100}%`;
+        symbol.style.top = `${Math.random() * 100}%`;
+        symbol.style.fontSize = `${Math.random() * 1 + 0.5}rem`;
+        symbol.style.animationDuration = `${Math.random() * 20 + 10}s`;
+        symbol.style.animationDelay = `${Math.random() * 10}s`;
+        floatingSymbols.appendChild(symbol);
+      }
+    }
+
+    // Initialize spread based on selection
+    function initializeSpread(spreadType) {
+      cardSpread.innerHTML = '';
+      readingResults.innerHTML = '';
+      readingResults.classList.remove('active');
+      
+      currentSpread = spreadType;
+      currentCards = [];
+      
+      const positions = spreads[spreadType];
+      
+      positions.forEach((position, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.position = index;
+        
+        const cardBack = document.createElement('div');
+        cardBack.className = 'card-face card-back';
+        cardBack.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        const cardFront = document.createElement('div');
+        cardFront.className = 'card-face card-front';
+        
+        card.appendChild(cardBack);
+        card.appendChild(cardFront);
+        
+        card.addEventListener('click', () => {
+          if (!card.classList.contains('flipped')) {
+            flipCard(card, index);
+          }
+        });
+        
+        cardSpread.appendChild(card);
+      });
+    }
+
+    // Shuffle and assign cards
+    function shuffleCards() {
+      // Reset cards
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('flipped');
+        const cardFront = card.querySelector('.card-front');
+        cardFront.innerHTML = '';
+      });
+      
+      readingResults.innerHTML = '';
+      readingResults.classList.remove('active');
+      
+      // Shuffle and assign new cards
+      const positions = spreads[currentSpread];
+      currentCards = [];
+      
+      for (let i = 0; i < positions.length; i++) {
+        // Randomly select card and orientation
+        const randomIndex = Math.floor(Math.random() * tarotCards.length);
+        const isReversed = Math.random() > 0.7; // 30% chance of reversed
+        
+        currentCards.push({
+          card: tarotCards[randomIndex],
+          position: positions[i],
+          isReversed: isReversed
+        });
+      }
+      
+      // Show toast notification
+      showToast('Cards shuffled successfully!', 'success');
+    }
+
+    // Flip individual card
+    function flipCard(card, positionIndex) {
+      if (currentCards.length === 0) {
+        showToast('Please shuffle the cards first!', 'error');
+        return;
+      }
+      
+      card.classList.add('flipped');
+      
+      const cardData = currentCards[positionIndex];
+      const cardFront = card.querySelector('.card-front');
+      
+      // Display card image (or placeholder in this case)
+      cardFront.innerHTML = `
+        <img src="${cardData.card.image}" alt="${cardData.card.name}" class="card-image">
+      `;
+      
+      // If all cards are flipped, show reading
+      if (document.querySelectorAll('.card.flipped').length === currentCards.length) {
+        displayReading();
+      }
+    }
+
+    // Reveal all cards
+    function revealAllCards() {
+      if (currentCards.length === 0) {
+        showToast('Please shuffle the cards first!', 'error');
+        return;
+      }
+      
+      document.querySelectorAll('.card').forEach((card, index) => {
+        if (!card.classList.contains('flipped')) {
+          flipCard(card, index);
+        }
+      });
+    }
+
+    // Display reading interpretation
+    function displayReading() {
+      readingResults.innerHTML = '<h3>Your Tarot Reading</h3>';
+      
+      currentCards.forEach((cardData, index) => {
+        const { card, position, isReversed } = cardData;
+        const orientation = isReversed ? 'reversed' : 'upright';
+        const meaningText = isReversed ? card.meaning.reversed : card.meaning.upright;
+        
+        const cardElement = document.createElement('div');
+        cardElement.className = 'card-meaning';
+        cardElement.innerHTML = `
+          <h4>${card.name} <span class="position">(${position.name})</span></h4>
+          <p><strong>${orientation.charAt(0).toUpperCase() + orientation.slice(1)}:</strong> ${meaningText}</p>
+          <p><strong>Position Meaning:</strong> ${position.description}</p>
+          <p><strong>Interpretation:</strong> ${getInterpretation(card, position, isReversed)}</p>
+        `;
+        
+        readingResults.appendChild(cardElement);
+      });
+      
+      // Add overall reading insight
+      const overall = document.createElement('div');
+      overall.innerHTML = `
+        <h4>Overall Insight</h4>
+        <p>${getOverallInsight()}</p>
+      `;
+      readingResults.appendChild(overall);
+      
+      // Add premium feature prompt if not logged in
+      if (!isLoggedIn) {
+        const premiumPrompt = document.createElement('div');
+        premiumPrompt.style.marginTop = '30px';
+        premiumPrompt.style.padding = '20px';
+        premiumPrompt.style.backgroundColor = 'rgba(255, 152, 0, 0.1)';
+        premiumPrompt.style.borderRadius = '10px';
+        premiumPrompt.style.border = '1px solid var(--accent)';
+        
+        premiumPrompt.innerHTML = `
+          <h4 style="color: var(--accent);">Unlock Deeper Insights</h4>
+          <p>Sign up for our premium plan to receive AI-enhanced personalized interpretations, save your reading history, and connect with professional tarot readers.</p>
+          <button class="btn btn-signup" style="margin-top: 15px;" id="premium-signup-btn">Sign Up Now</button>
+        `;
+        
+        readingResults.appendChild(premiumPrompt);
+        
+        document.getElementById('premium-signup-btn').addEventListener('click', () => {
+          openModal('signup');
+        });
+      }
+      
+      readingResults.classList.add('active');
+      readingResults.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Generate interpretation (simplified for demo)
+    function getInterpretation(card, position, isReversed) {
+      // In a real application, this would contain more complex logic combining 
+      // the card meaning, position, and other factors
+      
+      const interpretations = [
+        "This card suggests you should focus on your inner wisdom and trust your intuition.",
+        "The energy here indicates a need for balance between your logical and emotional sides.",
+        "This represents an opportunity for growth if you're willing to step outside your comfort zone.",
+        "Consider how past experiences might be influencing your current perspective.",
+        "This suggests a need to let go of what no longer serves you in order to move forward.",
+        "Pay attention to recurring patterns in your life that this card is highlighting.",
+        "This energy encourages you to embrace change rather than resist it."
+      ];
+      
+      return interpretations[Math.floor(Math.random() * interpretations.length)];
+    }
+
+    // Generate overall insight
+    function getOverallInsight() {
+      const insights = [
+        "This reading suggests a period of transition and growth. While challenges may arise, you have the inner resources to overcome them if you trust your intuition and remain adaptable.",
+        "The cards reveal a need for balance between your practical responsibilities and spiritual growth. Taking time for self-reflection will help you navigate upcoming decisions with clarity.",
+        "There's an indication of unresolved past issues influencing your current situation. Addressing these with compassion for yourself will open new possibilities for the future.",
+        "This spread highlights your inner strength and resilience. Though you may not feel it at times, you have the power to create positive change in your life circumstances.",
+        "The reading points to a cycle completing in your life. Be ready to embrace new beginnings and opportunities that align with your authentic self."
+      ];
+      
+      return insights[Math.floor(Math.random() * insights.length)];
+    }
+
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      let icon = 'info-circle';
+      if (type === 'success') icon = 'check-circle';
+      if (type === 'error') icon = 'exclamation-circle';
+      
+      toast.innerHTML = `
+        <i class="fas fa-${icon}"></i>
+        <span>${message}</span>
+      `;
+      
+      toastContainer.appendChild(toast);
+      
+      // Animate in
+      setTimeout(() => {
+        toast.classList.add('active');
+      }, 10);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove('active');
+        setTimeout(() => {
+          toastContainer.removeChild(toast);
+        }, 300);
+      }, 3000);
+    }
+
+    // Modal functions
+    function openModal(tab = 'login') {
+      authModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Set active tab
+      modalTabs.forEach(t => t.classList.remove('active'));
+      document.querySelector(`.modal-tab[data-tab="${tab}"]`).classList.add('active');
+      
+      // Show correct form
+      if (tab === 'login') {
+        loginForm.style.display = 'block';
+        signupForm.style.display = 'none';
+      } else {
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'block';
+      }
+    }
+
+    function closeModalFunc() {
+      authModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      createFloatingSymbols();
+      
+      // Initialize with three card spread
+      initializeSpread('three-card');
+      readingInterface.style.display = 'none';
+    });
+
+    // Start reading button
+    startReadingBtn.addEventListener('click', () => {
+      readingInterface.style.display = 'flex';
+      startReadingBtn.style.display = 'none';
+      shuffleCards(); // Auto-shuffle on start
+      readingInterface.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Spread option buttons
+    spreadOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        spreadOptions.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        initializeSpread(option.dataset.spread);
+        shuffleCards();
+      });
+    });
+
+    // Shuffle button
+    shuffleBtn.addEventListener('click', shuffleCards);
+
+    // Reveal all button
+    revealBtn.addEventListener('click', revealAllCards);
+
+    // Save reading button
+    saveReadingBtn.addEventListener('click', () => {
+      if (isLoggedIn) {
+        showToast('Reading saved successfully!', 'success');
+      } else {
+        openModal('signup');
+        showToast('Please sign up to save your reading', 'error');
+      }
+    });
+
+    // Modal events
+    loginBtn.addEventListener('click', () => openModal('login'));
+    signupBtn.addEventListener('click', () => openModal('signup'));
+    closeModal.addEventListener('click', closeModalFunc);
+    
+    // Close modal when clicking outside
+    authModal.addEventListener('click', (e) => {
+      if (e.target === authModal) {
+        closeModalFunc();
+      }
+    });
+
+    // Switch between login and signup tabs
+    modalTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        modalTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        if (tab.dataset.tab === 'login') {
+          loginForm.style.display = 'block';
+          signupForm.style.display = 'none';
+        } else {
+          loginForm.style.display = 'none';
+          signupForm.style.display = 'block';
+        }
+      });
+    });
+
+    // Navigation smoothscroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        if (this.getAttribute('href') === '#') return;
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
